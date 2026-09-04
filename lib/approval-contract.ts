@@ -1,3 +1,4 @@
+import type {WorkflowEvent} from './workflow-audit';
 /** Transport-independent contract for future server-side source connectors.
  * Do not implement enterprise credentials or authorization in browser code.
  */
@@ -34,6 +35,10 @@ export interface ApprovalConnector {
    * Resolve only after the source confirms. Reject on conflict or unavailable source.
    */
   decide(actor: Actor, decision: Decision): Promise<DecisionReceipt>;
+  /** Authorized, paginated source events including agent identity, delegated scope,
+   * run IDs, evidence and human handoffs. Persist server-side; never accept a
+   * browser-supplied actor or timestamp as authoritative audit evidence. */
+  listAuditEvents(actor: Actor, sourceId: string, cursor?: string): Promise<{events: WorkflowEvent[]; nextCursor?: string}>;
 }
 export class ConnectorRegistry {
   private connectors = new Map<string, ApprovalConnector>();
