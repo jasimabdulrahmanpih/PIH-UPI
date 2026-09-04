@@ -23,3 +23,9 @@ Provision identity, server storage, per-source service accounts and a test envir
 The UI now uses a compact queue and distinct purchase, leave, and document decision surfaces. Guided question matching selects budget, changes or risk evidence. This is deterministic progressive disclosure, not an LLM service or open-ended GenUI engine. Added line items, calendar and document excerpts are explicitly sample evidence. No prior versions are fabricated; missing risk inputs remain visible.
 
 Correspondence adds a sample register, document lifecycle, local review threads, entity/classification filtering and proposed reference standard. It does not upload files, issue official references, dispatch mail, enforce classification ACLs or persist records. Record allocation must be atomic in production. Preserve original references separately, including Arabic strings. Use sensitivity plus category/audience metadata instead of treating Board & legal as a universal sensitivity level.
+
+## Quick and mobile views (v3)
+
+Quick view is the default decision surface: scope, short summary, three relevant facts, missing evidence and actions. Full context uses the original source-specific surfaces. Switching modes preserves the active request and decision state; the mode preference alone is stored locally in the browser. Quick view does not bypass source permissions or decision validation in a future production integration.
+
+The mobile layout uses an expandable request queue, a single decision column and fixed bottom actions. Actions are hidden while browsing the queue. The `/mobile-preview` route embeds the actual app at 360×780, 390×844 and 768×1024 viewports; it is an interactive demonstration, not a native app. Demo action data remains session-local.
