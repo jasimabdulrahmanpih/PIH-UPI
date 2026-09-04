@@ -12,7 +12,7 @@ export interface ApprovalRecord {
   submittedAt: string;
   dueAt?: string;
   fields: Record<string, string>;
-  actions: ApprovalAction[];
+  actions: (ApprovalAction | 'sign')[];
 }
 export interface Decision {
   sourceId: string;
@@ -47,4 +47,11 @@ export class ConnectorRegistry {
     return connector;
   }
   all() { return [...this.connectors.values()]; }
+}
+
+/** Signing is a source-controlled session, never a one-click approval mutation. */
+export interface SigningConnector extends ApprovalConnector {
+  createSigningSession(actor: Actor, request: {sourceId: string; expectedVersion: string; idempotencyKey: string}): Promise<{sessionId: string; signingUrl: string; expiresAt: string}>;
+  /** Reconcile with the source, not an unverified browser callback. */
+  getSigningReceipt(actor: Actor, sessionId: string): Promise<{status: 'pending'} | {status: 'signed'; sourceTransactionId: string; documentVersion: string; evidenceId: string; signedAt: string}>;
 }

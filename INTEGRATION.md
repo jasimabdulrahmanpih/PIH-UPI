@@ -29,3 +29,11 @@ Correspondence adds a sample register, document lifecycle, local review threads,
 Quick view is the default decision surface: scope, short summary, three relevant facts, missing evidence and actions. Full context uses the original source-specific surfaces. Switching modes preserves the active request and decision state; the mode preference alone is stored locally in the browser. Quick view does not bypass source permissions or decision validation in a future production integration.
 
 The mobile layout uses an expandable request queue, a single decision column and fixed bottom actions. Actions are hidden while browsing the queue. The `/mobile-preview` route embeds the actual app at 360×780, 390×844 and 768×1024 viewports; it is an interactive demonstration, not a native app. Demo action data remains session-local.
+
+## Signing and scrolling (v4)
+
+Requests now declare their required action independently of their application: approve or sign. The Signature.ai sample uses Review & sign. The in-page signing experience shows an illustrative document, a signature placement preview, sample saved/generated/local-image options, explicit sample review and consent, and a demo receipt. Signed is a separate session status and does not imply dispatch. Uploaded images remain local object URLs and are revoked when replaced or the signing component is unmounted. No actual signature artifact, original contract, source transaction or legally executed document is produced.
+
+Production signing must be initiated as a source-controlled signing session for an immutable document version, with signer authorization, authentication/step-up, consent, signature-field mapping, tamper evidence and receipt reconciliation handled by Signature.ai. Never treat a saved signature image as sufficient proof of identity or mark a source document signed from a client callback alone.
+
+The desktop mobile preview now fits its frame in the available window and prevents outer scrolling; only the app scrolls. On phone-sized browsers the preview route shows the app directly. The mobile request queue expands into the page, with no nested list scroller and no underlying decision panel while choosing a request. Already-open production tabs can retain a prior bundle until refreshed; the prominent view selector is present in the current build.
