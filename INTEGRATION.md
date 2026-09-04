@@ -17,3 +17,9 @@ Require expectedVersion and idempotencyKey. Reject stale requests and unsupporte
 ## Before production
 
 Provision identity, server storage, per-source service accounts and a test environment. Exercise permissions, concurrent decisions, expired sessions, source outages, retries, duplicate delivery, pagination and tenant separation. Review privacy, audit retention and document access with PIH owners. Replace demo identity and all fixtures; implement source-specific attachment previews and links only from verified authorized source metadata.
+
+## Contextual decision workspace (v2)
+
+The UI now uses a compact queue and distinct purchase, leave, and document decision surfaces. Guided question matching selects budget, changes or risk evidence. This is deterministic progressive disclosure, not an LLM service or open-ended GenUI engine. Added line items, calendar and document excerpts are explicitly sample evidence. No prior versions are fabricated; missing risk inputs remain visible.
+
+Correspondence adds a sample register, document lifecycle, local review threads, entity/classification filtering and proposed reference standard. It does not upload files, issue official references, dispatch mail, enforce classification ACLs or persist records. Record allocation must be atomic in production. Preserve original references separately, including Arabic strings. Use sensitivity plus category/audience metadata instead of treating Board & legal as a universal sensitivity level.
