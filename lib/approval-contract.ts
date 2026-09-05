@@ -4,12 +4,25 @@ import type {WorkflowEvent} from './workflow-audit';
  */
 export type ApprovalAction = 'approve' | 'return';
 export interface Actor { subject: string; tenantId: string; }
+export interface SourceAttachmentRecord {
+  id: string;
+  sourceId: string;
+  filename: string;
+  mimeType: string;
+  sizeBytes: number;
+  version: string;
+  uploadedAt: string;
+  uploadedBy: string;
+  classification?: string;
+}
 export interface ApprovalRecord {
   source: string;
   sourceId: string;
   version: string;
   assignedTo: string;
   title: string;
+  documentType: string;
+  attachments: SourceAttachmentRecord[];
   submittedAt: string;
   dueAt?: string;
   fields: Record<string, string>;
@@ -31,6 +44,9 @@ export interface ApprovalConnector {
   id: string;
   listAssigned(actor: Actor, cursor?: string): Promise<{items: ApprovalRecord[]; nextCursor?: string}>;
   getRequest(actor: Actor, sourceId: string): Promise<ApprovalRecord>;
+  /** Re-authorize every preview/download against the source record. Return a
+   * short-lived source URL so PIH Workspace does not become another master file store. */
+  createAttachmentAccess(actor: Actor, input: {sourceId: string; attachmentId: string; disposition: 'inline'|'attachment'}): Promise<{url: string; expiresAt: string}>;
   /** Must enforce source permissions, version checks, allowed actions and idempotency.
    * Resolve only after the source confirms. Reject on conflict or unavailable source.
    */

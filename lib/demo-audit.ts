@@ -44,6 +44,10 @@ export function sampleAudit(r: Omit<Request, 'audit'>): WorkflowEvent[] {
       evidence: `${r.id} · Recorded review-status field; source review receipt unavailable`,
     }));
   }
+  if (r.id === 'CBS-2026-0204') {
+    events.push(make('hold', '05', { actor: {id:'demo-bid-committee',name:'Procurement committee',kind:'human'}, action:'Request placed on hold', summary:'Held while a bidder clarified the preventive-maintenance scope.', outcome:'attention', fromStatus:'Evaluation', toStatus:'On hold', evidence:'CBS-2026-0204 · Sample clarification log' }));
+    events.push(make('clarify', '09', { actor: {id:'demo-procurement-lead',name:'Layla Al-Thani',kind:'human'}, action:'Clarification accepted', summary:'Recorded the bidder response and returned the comparison to approval.', fromStatus:'On hold', toStatus:'Evaluated', evidence:'CBS-2026-0204 · Sample clarification log' }));
+  }
   events.push(make('assigned', '12', {
     action: r.action === 'sign' ? 'Assigned to Jasim for signature' : 'Assigned to Jasim for decision',
     summary: r.action === 'sign' ? 'Waiting for document review and explicit signing consent.' : 'Prepared context handed to the assigned human approver.',

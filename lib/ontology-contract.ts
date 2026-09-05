@@ -24,6 +24,7 @@ export interface ExternalContextProvider {
 
 export function demoOntology(r: Request): RequestOntology {
   const fieldNodes = Object.entries(r.fields).slice(0, 4).map(([label, value], i) => ({ id: `field-${i}`, type: label, label, value }));
+  const attachmentNodes = r.attachments.map((a, i) => ({ id: `attachment-${i}`, type: a.label, label: a.name, value: `${a.kind} · ${a.size}` }));
   return {
     requestId: r.id,
     schema: 'PIH request ontology · sample v1',
@@ -32,15 +33,18 @@ export function demoOntology(r: Request): RequestOntology {
       { id: 'requester', type: 'Person', label: r.name, value: r.department },
       { id: 'source', type: 'Application', label: ['SAP S/4HANA','SuccessFactors','Signature.ai','IT Service Desk','Tamas','AI Applications'][r.app], value: r.id },
       ...fieldNodes,
+      ...attachmentNodes,
     ],
     relations: [
       { from: 'requester', verb: 'submitted', to: 'request' },
       { from: 'request', verb: 'recorded in', to: 'source' },
       ...fieldNodes.slice(0, 3).map(n => ({ from: 'request', verb: 'has', to: n.id })),
+      ...attachmentNodes.map(n => ({ from: 'request', verb: 'includes', to: n.id })),
     ],
     evidence: [
       { id: 'E1', label: 'Request record and supplied fields', source: `${r.id} · Sample source payload` },
       { id: 'E2', label: 'Workflow actors and handoffs', source: `${r.audit.length} sample/session audit events` },
+      { id: 'E3', label: 'Source attachments', source: r.attachments.length ? `${r.attachments.length} sample source files` : 'No attachment supplied' },
     ],
   };
 }

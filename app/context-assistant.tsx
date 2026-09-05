@@ -11,6 +11,9 @@ type Message = { id: string; role: 'user' | 'assistant'; text: string; evidence?
 function answerFor(r: Request, ontology: RequestOntology, question: string) {
   const q = question.toLowerCase();
   const fields = ontology.nodes.filter(n => n.id.startsWith('field-')).map(n => [n.label, n.value]);
+  if (/attachment|document|quote|quotation|cbs|file/.test(q)) {
+    return { text: r.attachments.length ? `This request includes ${r.attachments.length} source attachment${r.attachments.length===1?'':'s'}: ${r.attachments.map(a=>`${a.name} (${a.label})`).join(', ')}. Open Source attachments to inspect each file and its source metadata.` : 'No source attachment is included with this sample request.', evidence: ['E3'] };
+  }
   if (/who|related|entity|people|vendor|counterparty/.test(q)) {
     return { text: `${r.name} submitted this ${r.department} request. ${fields.slice(0, 2).map(([k,v]) => `${k} is ${v}`).join('; ')}. These relationships come from the request ontology, not an inference about PIH’s wider organization.`, evidence: ['E1'] };
   }
