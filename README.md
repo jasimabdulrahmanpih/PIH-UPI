@@ -26,7 +26,7 @@ The target integration landscape includes:
 - **SAP S/4HANA** for finance, procurement, and other ERP approval requests
 - **SAP Business Technology Platform (BTP)** for integration services, workflow orchestration, events, and access to SAP capabilities
 - **SAP SuccessFactors** for HR workflows such as leave and employee-related approvals
-- **Signature.ai**, PIH's in-house document-signing portal, for controlled document review, signing sessions, and verified signing receipts
+- **Signiture.ai**, PIH's in-house document-signing portal, for controlled document review, signing sessions, and verified signing receipts
 - **DAMAS**, PIH's task-management application, for assigned tasks, workflow context, status, and actions
 - **ManageEngine ServiceDesk Plus** for IT service-desk requests and ticket approvals
 - **HIKMAH**, PIH's AI platform, and AI applications added over time, for governed AI-assisted tasks and decision context
@@ -64,7 +64,7 @@ Decision write-back must include the authenticated actor, intended action, reaso
 
 ## Sample source applications
 
-The current prototype represents requests from systems such as SAP S/4HANA, SAP SuccessFactors, Signature.ai, service desk, and other PIH applications. These are sample adapters only. SAP BTP, DAMAS, ManageEngine ServiceDesk Plus, HIKMAH, future AI applications, and Microsoft 365 email are part of the intended integration landscape; they are not live integrations in this prototype. No credentials, vendor endpoints, mailbox data, or production records are included.
+The current prototype represents requests from systems such as SAP S/4HANA, SAP SuccessFactors, Signiture.ai, service desk, and other PIH applications. These are sample adapters only. SAP BTP, DAMAS, ManageEngine ServiceDesk Plus, HIKMAH, future AI applications, and Microsoft 365 email are part of the intended integration landscape; they are not live integrations in this prototype. No credentials, vendor endpoints, mailbox data, or production records are included.
 
 ## Important limitations
 
